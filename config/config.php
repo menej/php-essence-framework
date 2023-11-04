@@ -3,9 +3,10 @@
 return [
     'database' => [
         'host' => 'YOUR HOST HERE',
+        'user' => 'YOUR USER HERE',
         'password' => 'YOUR PASSWORD HERE',
         'port' => 3306,
-        'dbname' => 'YOUR DBNAME HERE',
+        'schema' => 'YOUR SCHEMA NAME HERE',
         'charset' => 'utf8mb4'
     ]
 ];
