@@ -1,4 +1,4 @@
-# php-template-v2
+# php-essence-framework
 
 This is a simple and intuitive PHP MVC framework that can be used for small or medium-sized projects.
 
