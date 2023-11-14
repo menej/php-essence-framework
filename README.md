@@ -16,6 +16,12 @@ This is a simple and intuitive PHP MVC framework that can be used for small or m
     - Session.php
     - Validator.php
     - ViewHelper.php
+- public
+    - css
+        - style.css
+    - js
+        - script.js
+    - index.php
 - model
     - DBInit.php
 - view
@@ -31,8 +37,8 @@ This is a simple and intuitive PHP MVC framework that can be used for small or m
 
 ### public
 
-This is the PHP server directory where we start our server. It is crucial to set the document root when booting up the
-server. For example: `php -S localhost:8888 -t public`. This directory is also used to store CSS and JS files, hiding
+This is the PHP server directory where we start our server. It is essential to set the document root when booting up the
+server. For example: `php -S localhost:8888 -t public`. This directory also stores CSS and JS files, hiding
 other files from the public.
 
 #### routes.php
@@ -61,12 +67,11 @@ Explanation:
 
 ### index.php
 
-This is the router of the project, routing different URL requests with their corresponding controllers and methods. The
-router supports the four different HTTP requests. When submitting a form, an input with type hidden is added with a name
-of "_method" and a value of the following (note: if the request is GET or POST, this does not need to be included).
-However, when using any other types of methods, the form type should be POST.
+This is the router of the project, routing different URL requests with their related controllers and methods. The
+router supports four HTTP requests: GET, POST, PATCH, and DELETE. No special handling needs to be added for processing HTTP requests with a GET or POST method. However, when needing to specify a PATCH or DELETE method, it is essential to add to a submitting form an input element with type hidden, an attribute name with the value "_method" and an attribute value of the needed method uppercased.
+Note that the form type attribute value should be POST when using HTTP methods other than GET requests.
 
-RESTful approach is recommended, meaning the use of function names inside the controller:
+A RESTful approach is recommended, meaning the use of function names inside the controller:
 
 ```
 index (example: show all notes) - GET
@@ -93,9 +98,9 @@ This directory is used for utilities.
 
 #### functions.php
 
-In here, there are defined functions that can be used throughout the whole project. Some examples are `base_path($path)`
-function, which we put in as an argument a path, and it returns us the whole path from the base. Another example is the
-`controller($path)` function, which does a similar thing, but returns us the directory to the controller.
+Here are defined functions that can be used throughout the whole project. Some examples are `base_path($path)`
+function, which we put in as an argument a path, returns us the whole path from the base. Another example is the
+`controller($path)` function, which does a similar thing, but returns the directory to the controller.
 
 #### Response.php
 
@@ -157,13 +162,12 @@ class IndexController
 ```
 
 Note: For now, `DBInit::getInstance()` needs to be utilized at the beginning of each controller to initiate the database
-instance. To address this in the future, consider implementing a singleton pattern.
+instance. To address this in the future, consider implementing Automatic Dependency Injection.
 
 ### view
 
-This directory stores views. Views should be named in a way that indicates it is a view - NAME.view.php. Semantically
-corresponding views should fall into the same directory with the same name as their controller. The partials pattern is
-used to inject the head and foot of the HTML document to decrease redundancy.
+This directory stores views. Views should be named in a way, that signifies a view - NAME.view.php. Semantically
+corresponding views should fall into the same directory with the same name as their controller. The partials pattern injects the head and foot of the HTML document to decrease redundancy.
 
 It's important to note that, due to this pattern, a title should be included in a $variables array before rendering each
 view.
@@ -180,3 +184,35 @@ For instance, consider the `index.view.php` file:"
 <?php require "partials/footer.php" ?>
 ```
 
+### model
+
+This directory stores models. The models should be named after the object they represent, preferably in a singular sense (e.g., note, user).
+
+#### DBInit.php
+
+The `DBInit` class, located in the `model` namespace, provides a singleton interface for initializing a PDO (PHP Data
+Objects) connection to a MySQL database.
+
+#### Usage
+
+To obtain an instance of the PDO connection, use the `getInstance` method of the `DBInit` class.
+
+```php
+use model\DBInit;
+
+// Get a PDO instance
+$pdo = DBInit::getInstance();
+```
+
+#### Configuration
+
+The database configuration is loaded from an external configuration file (`config/config.php`). Ensure that this file
+contains the necessary database parameters described previously.
+
+#### PDO Configuration
+The PDO instance is configured with the following options:
+
+- The error mode is set to `PDO::ERRMODE_EXCEPTION` for robust error handling.
+- The default fetch mode is set to `PDO::FETCH_ASSOC` for associative array results.
+- Persistence enabled (`PDO::ATTR_PERSISTENT`) for maintaining a persistent connection.
+- MySQL character set initialized to UTF-8 (`PDO::MYSQL_ATTR_INIT_COMMAND`).
