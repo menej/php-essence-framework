@@ -184,6 +184,25 @@ For instance, consider the `index.view.php` file:"
 <?php require "partials/footer.php" ?>
 ```
 
+If we were to pass some variables into the view, these should also be documented above the script in the following manner:
+```php
+<?php
+/**
+ * @var string $name
+ * @var int $age
+ */
+?>
+
+<?php require "partials/head.php" ?>
+
+<main>
+    <p>Hello <?= $name ?>, you are <?= $age ?> old!</p>
+</main>
+
+<?php require "partials/footer.php" ?>
+
+```
+
 ### model
 
 This directory stores models. The models should be named after the object they represent, preferably in a singular sense (e.g., note, user).
