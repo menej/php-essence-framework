@@ -12,9 +12,6 @@ class IndexController
 {
     public static function index(): void
     {
-
-        DBInit::getInstance();
-
         $variables = ["title" => "Home"];
         ViewHelper::render('index.view.php', $variables);
     }

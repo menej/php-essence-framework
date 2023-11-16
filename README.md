@@ -152,17 +152,11 @@ class IndexController
 {
     public static function index(): void
     {
-
-        DBInit::getInstance();
-
         $variables = ["title" => "Home"];
         ViewHelper::render('index.view.php', $variables);
     }
 }
 ```
-
-Note: For now, `DBInit::getInstance()` needs to be utilized at the beginning of each controller to initiate the database
-instance. To address this in the future, consider implementing Automatic Dependency Injection.
 
 ### view
 
@@ -223,6 +217,10 @@ use model\DBInit;
 // Get a PDO instance
 $pdo = DBInit::getInstance();
 ```
+
+Note: For now, `DBInit::getInstance()` needs to be utilized at the beginning of each models function to initiate the 
+database instance. To address this in the future, consider implementing Automatic Dependency Injection.
+
 
 #### Configuration
 
