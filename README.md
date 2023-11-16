@@ -188,6 +188,7 @@ If we were to pass some variables into the view, these should also be documented
 ```php
 <?php
 /**
+ * @var string $title
  * @var string $name
  * @var int $age
  */
