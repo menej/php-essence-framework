@@ -65,6 +65,14 @@ Explanation:
 - `['IndexController', 'index']` - the controller name is the first argument, and the second is the method inside the
   controller.
 
+When you create a new controller and intend to use it within a router, remember to require it in the router file 
+or 'index.php'. Here's an example: 
+
+```php
+# Require controllers
+require controller('IndexController.php');
+```
+
 ### index.php
 
 This is the router of the project, routing different URL requests with their related controllers and methods. The
